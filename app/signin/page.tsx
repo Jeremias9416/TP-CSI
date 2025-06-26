@@ -10,11 +10,10 @@ export default function SignInPage() {
       <Button
         variant="solid"
         size="md"
-        onClick={() => signIn('github')}
+        onClick={() => signIn('github', { callbackUrl: '/' })}
       >
         Iniciar sesión con GitHub
       </Button>
     </div>
   );
 }
-
