@@ -1,20 +1,14 @@
 import NextAuth from "next-auth";
-import GitHubProvider from "next-auth/providers/github";
-import { PrismaAdapter } from "@next-auth/prisma-adapter";
-import prisma from "@/lib/prisma";
+import GithubProvider from "next-auth/providers/github";
+// más configuración...
 
 const handler = NextAuth({
-  adapter: PrismaAdapter(prisma),
   providers: [
-    GitHubProvider({
+    GithubProvider({
       clientId: process.env.GITHUB_ID!,
       clientSecret: process.env.GITHUB_SECRET!,
     }),
   ],
-  session: {
-    strategy: "jwt",
-  },
-  secret: process.env.NEXTAUTH_SECRET,
 });
 
 export { handler as GET, handler as POST };
