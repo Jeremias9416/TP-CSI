@@ -1,4 +1,5 @@
 // app/api/admin/users/route.ts
+export const runtime = 'nodejs'; // <-- ¡AÑADE ESTA LÍNEA!
 import { getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 
