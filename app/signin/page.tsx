@@ -7,7 +7,7 @@ export default function SignInPage() {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen">
       <h1 className="text-2xl mb-6">Iniciar sesión</h1>
-      <Button variant="solid" onClick={() => signIn('github', { callbackUrl: '/docs' })}>
+      <Button variant="solid" onClick={() => signIn('github', { callbackUrl: '/dashboard' })}>
         Iniciar sesión con GitHub
       </Button>
     </div>
