@@ -1,10 +1,12 @@
 // app/dashboard/layout.tsx
 import { getServerSession } from "next-auth";
+
 // Ajusta esta ruta a la ubicación exacta de tu archivo nextauth.ts
+import { redirect } from "next/navigation";
+import Link from "next/link";
+
 import { authOptions } from "@/app/api/auth/[...nextauth]/nextauth";
-import { redirect } from 'next/navigation';
-import Link from 'next/link';
-import LogoutButton from '@/components/LogoutButton';
+import LogoutButton from "@/components/LogoutButton";
 
 export default async function DashboardLayout({
   children,
@@ -14,11 +16,14 @@ export default async function DashboardLayout({
   const session = await getServerSession(authOptions);
 
   if (!session) {
-    redirect('/');
+    redirect("/");
   }
 
-  if (!session.user?.role || (session.user.role !== 'user' && session.user.role !== 'admin')) {
-      redirect('/unauthorized');
+  if (
+    !session.user?.role ||
+    (session.user.role !== "user" && session.user.role !== "admin")
+  ) {
+    redirect("/unauthorized");
   }
 
   return (
@@ -28,19 +33,28 @@ export default async function DashboardLayout({
         <nav>
           <ul>
             <li className="mb-2">
-              <Link href="/dashboard" className="block p-2 rounded hover:bg-gray-700">
+              <Link
+                className="block p-2 rounded hover:bg-gray-700"
+                href="/dashboard"
+              >
                 Inicio Dashboard
               </Link>
             </li>
             {/* Enlace al panel principal de admin - SIN LA CONDICIÓN TEMPORALMENTE */}
             <li className="mb-2">
-              <Link href="/dashboard/admin" className="block p-2 rounded hover:bg-gray-700">
+              <Link
+                className="block p-2 rounded hover:bg-gray-700"
+                href="/dashboard/admin"
+              >
                 Admin Panel
               </Link>
-            </li >
+            </li>
             {/* Enlace a Administrar Usuarios - SIN LA CONDICIÓN TEMPORALMENTE */}
             <li className="mb-2">
-              <Link href="/dashboard/admin/users" className="block p-2 rounded hover:bg-gray-700">
+              <Link
+                className="block p-2 rounded hover:bg-gray-700"
+                href="/dashboard/admin/users"
+              >
                 Administrar Usuarios
               </Link>
             </li>
@@ -51,9 +65,7 @@ export default async function DashboardLayout({
         </nav>
       </aside>
 
-      <main className="flex-1 p-8 bg-gray-100">
-        {children}
-      </main>
+      <main className="flex-1 p-8 bg-gray-100">{children}</main>
     </div>
   );
 }

@@ -1,8 +1,7 @@
 // next-auth.d.ts (o src/types/next-auth.d.ts, donde lo tengas)
 
-import NextAuth, { DefaultSession, User as NextAuthUser } from "next-auth";
+import { DefaultSession, User as NextAuthUser } from "next-auth";
 import { DefaultJWT } from "next-auth/jwt";
-import { AdapterUser } from "next-auth/adapters";
 
 declare module "next-auth" {
   /**

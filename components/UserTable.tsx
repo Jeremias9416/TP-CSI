@@ -1,9 +1,9 @@
 // components/UserTable.tsx
-'use client';
+"use client";
 
-import { useState } from 'react';
-import { useSession } from 'next-auth/react'; // Para obtener el ID del usuario actual
-import Image from 'next/image';
+import { useState } from "react";
+import { useSession } from "next-auth/react"; // Para obtener el ID del usuario actual
+import Image from "next/image";
 // Importa tus componentes de HeroUI si tienes una tabla o selectores específicos
 // import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/table';
 // import { Select, SelectItem } from '@heroui/select';
@@ -30,34 +30,39 @@ export default function UserTable({ initialUsers }: UserTableProps) {
   const handleRoleChange = async (userId: string, newRole: string) => {
     // Evitar que un admin cambie su propio rol accidentalmente desde la UI
     // La protección principal debe estar en el backend, pero esto mejora la UX
-    if (session?.user?.id === userId && newRole !== 'admin') {
+    if (session?.user?.id === userId && newRole !== "admin") {
       alert("No puedes cambiar tu propio rol de administrador desde aquí.");
+
       return;
     }
 
     setLoadingUserId(userId);
     try {
-      const response = await fetch('/api/admin/users', {
-        method: 'PATCH',
+      const response = await fetch("/api/admin/users", {
+        method: "PATCH",
         headers: {
-          'Content-Type': 'application/json',
+          "Content-Type": "application/json",
         },
         body: JSON.stringify({ id: userId, role: newRole }),
       });
 
       if (!response.ok) {
         const errorData = await response.json();
-        throw new Error(errorData.message || 'Error al actualizar el rol');
+
+        throw new Error(errorData.message || "Error al actualizar el rol");
       }
 
       const updatedUser = await response.json();
 
       // Actualizar el estado de los usuarios para reflejar el cambio
-      setUsers(prevUsers =>
-        prevUsers.map(user => (user.id === updatedUser.id ? updatedUser : user))
+      setUsers((prevUsers) =>
+        prevUsers.map((user) =>
+          user.id === updatedUser.id ? updatedUser : user,
+        ),
       );
-      alert(`Rol de ${updatedUser.name || updatedUser.email} actualizado a ${updatedUser.role}.`);
-
+      alert(
+        `Rol de ${updatedUser.name || updatedUser.email} actualizado a ${updatedUser.role}.`,
+      );
     } catch (error: any) {
       console.error("Error al actualizar el rol:", error);
       alert(`Fallo al actualizar el rol: ${error.message}`);
@@ -68,7 +73,9 @@ export default function UserTable({ initialUsers }: UserTableProps) {
 
   return (
     <div className="overflow-x-auto bg-white shadow-md rounded-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-800 mb-4">Usuarios del Sistema</h2>
+      <h2 className="text-2xl font-bold text-gray-800 mb-4">
+        Usuarios del Sistema
+      </h2>
       <table className="min-w-full divide-y divide-gray-200">
         <thead className="bg-gray-50">
           <tr>
@@ -95,11 +102,11 @@ export default function UserTable({ initialUsers }: UserTableProps) {
               <td className="px-6 py-4 whitespace-nowrap">
                 {user.image && (
                   <Image
-                    src={user.image}
-                    alt={user.name || 'User Avatar'}
-                    width={40}
-                    height={40}
+                    alt={user.name || "User Avatar"}
                     className="rounded-full"
+                    height={40}
+                    src={user.image}
+                    width={40}
                   />
                 )}
               </td>
@@ -115,12 +122,16 @@ export default function UserTable({ initialUsers }: UserTableProps) {
                   onChange={(e) => handleRoleChange(user.id, e.target.value)}
                   className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md"
                   // Deshabilitar el selector para el usuario actualmente logueado si no quieres que se cambie a sí mismo
-                  disabled={loadingUserId === user.id || session?.user?.id === user.id}
+                  disabled={
+                    loadingUserId === user.id || session?.user?.id === user.id
+                  }
                 >
                   <option value="user">user</option>
                   <option value="admin">admin</option>
                 </select>
-                {loadingUserId === user.id && <span className="ml-2 text-blue-500">Actualizando...</span>}
+                {loadingUserId === user.id && (
+                  <span className="ml-2 text-blue-500">Actualizando...</span>
+                )}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                 {/* Puedes añadir botones de eliminar aquí si lo deseas */}

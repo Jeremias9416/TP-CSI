@@ -1,5 +1,5 @@
 // app/unauthorized/page.tsx
-import Link from 'next/link';
+import Link from "next/link";
 
 export default function UnauthorizedPage() {
   return (
@@ -8,7 +8,7 @@ export default function UnauthorizedPage() {
       <p className="text-lg text-gray-700 mb-8">
         No tienes los permisos necesarios para acceder a esta página.
       </p>
-      <Link href="/dashboard" className="text-blue-600 hover:underline text-lg">
+      <Link className="text-blue-600 hover:underline text-lg" href="/dashboard">
         Volver al Dashboard
       </Link>
       <p className="mt-2 text-sm text-gray-500">
