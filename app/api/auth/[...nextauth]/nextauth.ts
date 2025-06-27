@@ -1,11 +1,15 @@
-// app/api/auth/[...nextauth]/nextauth.ts (Este es el archivo correcto para este código)
+// app/api/auth/[...nextauth]/nextauth.ts
 
 import type { NextAuthOptions } from "next-auth";
-
 import GitHubProvider from "next-auth/providers/github";
 import { PrismaAdapter } from "@next-auth/prisma-adapter";
-
 import prisma from "@/lib/prisma";
+
+// AÑADE ESTO TEMPORALMENTE PARA DEPURAR EL SECRETO
+// ¡NO LO DEJES EN PRODUCCIÓN!
+console.log('DEBUG: NEXTAUTH_SECRET from process.env:', process.env.NEXTAUTH_SECRET ? 'Loaded (length: ' + process.env.NEXTAUTH_SECRET.length + ')' : 'NOT LOADED');
+console.log('DEBUG: NEXTAUTH_URL from process.env:', process.env.NEXTAUTH_URL || 'Not Set');
+
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),
@@ -18,20 +22,18 @@ export const authOptions: NextAuthOptions = {
   session: {
     strategy: "jwt",
   },
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET, // Asegúrate de que esto esté así
   callbacks: {
     async jwt({ token, user }) {
       if (user) {
-        token.role = user.role ?? "user"; // por defecto "user"
+        token.role = user.role ?? "user";
       }
-
       return token;
     },
     async session({ session, token }) {
       if (token) {
         session.user.role = token.role;
       }
-
       return session;
     },
   },
