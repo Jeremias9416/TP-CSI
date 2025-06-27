@@ -8,32 +8,32 @@ datasource db {
 }
 
 model User {
-  id             String   @id @default(auto()) @map("_id") @db.ObjectId
-  name           String?
-  email          String?  @unique
-  emailVerified  DateTime?
-  image          String?
-  accounts       Account[]
-  sessions       Session[]
-  role           String   @default("user")
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  role          String    @default("user") // Correcto: Campo 'role' con valor por defecto "user"
 }
 
 
 model Account {
-  id                 String   @id @default(auto()) @map("_id") @db.ObjectId
-  userId             String
-  type               String
-  provider           String
-  providerAccountId  String
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId // <-- **CORRECCIÓN: Añadido @db.ObjectId**
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String // <-- **CORRECCIÓN: Añadido @db.String para largos strings en MongoDB**
+  access_token      String? @db.String // <-- **CORRECCIÓN: Añadido @db.String para largos strings en MongoDB**
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String // <-- **CORRECCIÓN: Añadido @db.String para largos strings en MongoDB**
+  session_state     String?
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) // <-- **CORRECCIÓN: Añadido onDelete: Cascade**
 
   @@unique([provider, providerAccountId])
 }
@@ -41,10 +41,10 @@ model Account {
 model Session {
   id           String   @id @default(auto()) @map("_id") @db.ObjectId
   sessionToken String   @unique
-  userId       String
+  userId       String   @db.ObjectId // <-- **CORRECCIÓN: Añadido @db.ObjectId**
   expires      DateTime
 
-  user User @relation(fields: [userId], references: [id])
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade) // <-- **CORRECCIÓN: Añadido onDelete: Cascade**
 }
 
 model VerificationToken {
