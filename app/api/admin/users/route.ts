@@ -9,8 +9,13 @@ import prisma from "@/lib/prisma"; // Tu instancia de Prisma Client
 export async function GET() {
   const session = await getServerSession(authOptions);
 
+  // ¡AÑADE ESTA LÍNEA PARA DEPURAR!
+  console.log('DEBUG (GET): Sesión recibida en /api/admin/users:', session);
+
   // 1. Verificar autenticación y rol de administrador
   if (!session || session.user?.role !== "admin") {
+    // ¡AÑADE ESTA LÍNEA PARA DEPURAR!
+    console.log('DEBUG (GET): Intento de acceso no autorizado a /api/admin/users.');
     return new NextResponse(
       JSON.stringify({ message: "Acceso no autorizado" }),
       { status: 401 },
@@ -49,8 +54,13 @@ export async function GET() {
 export async function PATCH(request: Request) {
   const session = await getServerSession(authOptions);
 
+  // ¡AÑADE ESTA LÍNEA PARA DEPURAR!
+  console.log('DEBUG (PATCH): Sesión recibida en /api/admin/users:', session);
+
   // 1. Verificar autenticación y rol de administrador
   if (!session || session.user?.role !== "admin") {
+    // ¡AÑADE ESTA LÍNEA PARA DEPURAR!
+    console.log('DEBUG (PATCH): Intento de acceso no autorizado a /api/admin/users.');
     return new NextResponse(
       JSON.stringify({ message: "Acceso no autorizado" }),
       { status: 401 },
