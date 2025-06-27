@@ -3,7 +3,8 @@ import { getServerSession } from "next-auth";
 // Ajusta esta ruta a la ubicación exacta de tu archivo nextauth.ts
 import { authOptions } from "@/app/api/auth/[...nextauth]/nextauth";
 import { redirect } from 'next/navigation';
-import Link from 'next/link';
+import Link from 'next/link'; // next/link aún se usa para otros enlaces que no tienen onClick
+import LogoutButton from '@/components/LogoutButton'; // ¡IMPORTA ESTE COMPONENTE!
 
 export default async function DashboardLayout({
   children,
@@ -18,9 +19,7 @@ export default async function DashboardLayout({
   }
 
   // Si la sesión existe, pero no tiene un rol, o tiene un rol que no es 'user' o 'admin'
-  // Puedes ajustar esta lógica según tus necesidades de roles básicos
   if (!session.user?.role || (session.user.role !== 'user' && session.user.role !== 'admin')) {
-      // Podrías redirigir a una página de "acceso denegado" más específica
       redirect('/unauthorized');
   }
 
@@ -45,9 +44,8 @@ export default async function DashboardLayout({
               </li >
             )}
             <li className="mb-2">
-              <Link href="#" className="block p-2 rounded hover:bg-gray-700" onClick={() => { /* Lógica de logout */ }}>
-                Cerrar Sesión
-              </Link>
+              {/* ¡AQUÍ ESTÁ EL CAMBIO! Usamos el componente LogoutButton */}
+              <LogoutButton />
             </li>
           </ul>
         </nav>
