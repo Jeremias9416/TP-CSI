@@ -6,7 +6,8 @@ import { button as buttonStyles } from "@heroui/theme";
 import { siteConfig } from "@/config/site";
 import { title, subtitle } from "@/components/primitives";
 import { GithubIcon } from "@/components/icons";
-import LoginForm from "./../../components/auth/components/LoginForm";
+import LoginForm from '../../components/auth/components/loginForm';
+
 
 export default function AuthPage() {
   return (
