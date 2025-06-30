@@ -6,16 +6,14 @@ import { title } from "@/components/primitives";
 import { redirect } from "next/navigation";
 
 export default async function BlogPage() {
-
   const blogs = await getAllBlog();
   const session = await auth();
-  if(!session){
-    redirect('/login')
+  if (!session) {
+    redirect("/login");
   }
-  console.log(blogs)
+  console.log(blogs);
   return (
     <div>
-      
       <TableBlogs blogs={blogs} />
     </div>
   );

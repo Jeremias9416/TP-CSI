@@ -1,15 +1,15 @@
 "use client";
 
-import React ,{useState} from "react";
-import {Button, Input, Divider, ResizablePanel} from "@heroui/react";
-import {AnimatePresence, m, domAnimation, LazyMotion} from "framer-motion";
-import {Icon} from "@iconify/react";
-import Link  from 'next/link';
+import React, { useState } from "react";
+import { Button, Input, Divider, ResizablePanel } from "@heroui/react";
+import { AnimatePresence, m, domAnimation, LazyMotion } from "framer-motion";
+import { Icon } from "@iconify/react";
+import Link from "next/link";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import Swal from "sweetalert2";
 import { signIn, signOut, useSession } from "next-auth/react";
-import { useRouter } from 'next/navigation';
+import { useRouter } from "next/navigation";
 import { FaEyeSlash } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
 export default function LoginForm() {
@@ -17,19 +17,17 @@ export default function LoginForm() {
   const [isPassVisible, setIsPassVisible] = React.useState(false);
   const [loading, setLoading] = useState(false);
   const { data: session, status } = useSession();
-  const router  = useRouter();
-  async function signInSocial(social: string){
-    try{
-      await signIn(social, { callbackUrl:'/'})
-     } catch(error){
-       console.log(error)
-     }
-     
-
- }
+  const router = useRouter();
+  async function signInSocial(social: string) {
+    try {
+      await signIn(social, { callbackUrl: "/" });
+    } catch (error) {
+      console.log(error);
+    }
+  }
   const variants = {
-    visible: {opacity: 1, y: 0},
-    hidden: {opacity: 0, y: 10},
+    visible: { opacity: 1, y: 0 },
+    hidden: { opacity: 0, y: 10 },
   };
 
   const orDivider = (
@@ -65,16 +63,12 @@ export default function LoginForm() {
            redirect: false,
            callbackUrl: "/",
          }) */
-        await signIn('credentials', {...values, callbackUrl:'/dashboard'} )
-        console.log(values)
-
-
+        await signIn("credentials", { ...values, callbackUrl: "/dashboard" });
+        console.log(values);
       } catch (error) {
-
         Swal.fire("Hubo un error", `${error}`, "error");
         console.log(error);
         router.push("/");
-
       } finally {
         setLoading(false);
       }
@@ -85,34 +79,57 @@ export default function LoginForm() {
     <div className="flex h-full w-full items-center justify-center">
       <div className="flex w-full max-w-sm flex-col gap-4 rounded-large bg-content1 px-8 pb-10 pt-6 shadow-small">
         <ResizablePanel>
-          <h1 className="mb-4 text-xl text-center font-medium text-default-foreground">Ingresar al sistema</h1>
+          <h1 className="mb-4 text-xl text-center font-medium text-default-foreground">
+            Ingresar al sistema
+          </h1>
           <AnimatePresence initial={false} mode="popLayout">
             <LazyMotion features={domAnimation}>
               {isFormVisible ? (
                 <>
-                  <form onSubmit={formik.handleSubmit} onReset={formik.handleReset} className="flex flex-col gap-y-3">
-                  <Input
-                    autoFocus
-                    label="Usuario"
-                    name="email"
-                    type="text"
-                    variant="bordered"
-                    value={formik.values.email}
-                    onChange={formik.handleChange}
-                  />
-                  <Input label="Password" 
-                  name="password" 
-                  type={isPassVisible ? "text" :"password" }
-                  variant="bordered"
-                  value={formik.values.password} 
-                  onChange={formik.handleChange}
-                  endContent={
-                    isPassVisible ?  <FaEye onClick={(e) => {e.preventDefault(); setIsPassVisible(!isPassVisible)}} className="dark:text-white cursor-pointer"/> : <FaEyeSlash onClick={(e) => {e.preventDefault(); setIsPassVisible(!isPassVisible)}} className="dark:text-white cursor-pointer"/> 
-                  }
-                  />
-                  <Button  color="primary" type="submit">
-                    Ingresar
-                  </Button>
+                  <form
+                    onSubmit={formik.handleSubmit}
+                    onReset={formik.handleReset}
+                    className="flex flex-col gap-y-3"
+                  >
+                    <Input
+                      autoFocus
+                      label="Usuario"
+                      name="email"
+                      type="text"
+                      variant="bordered"
+                      value={formik.values.email}
+                      onChange={formik.handleChange}
+                    />
+                    <Input
+                      label="Password"
+                      name="password"
+                      type={isPassVisible ? "text" : "password"}
+                      variant="bordered"
+                      value={formik.values.password}
+                      onChange={formik.handleChange}
+                      endContent={
+                        isPassVisible ? (
+                          <FaEye
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setIsPassVisible(!isPassVisible);
+                            }}
+                            className="dark:text-white cursor-pointer"
+                          />
+                        ) : (
+                          <FaEyeSlash
+                            onClick={(e) => {
+                              e.preventDefault();
+                              setIsPassVisible(!isPassVisible);
+                            }}
+                            className="dark:text-white cursor-pointer"
+                          />
+                        )
+                      }
+                    />
+                    <Button color="primary" type="submit">
+                      Ingresar
+                    </Button>
                   </form>
                   {orDivider}
                   <Button
@@ -127,7 +144,7 @@ export default function LoginForm() {
                     variant="flat"
                     onPress={() => setIsFormVisible(false)}
                   >
-                   Otras opciones de ingreso
+                    Otras opciones de ingreso
                   </Button>
                 </>
               ) : (
@@ -136,7 +153,10 @@ export default function LoginForm() {
                     fullWidth
                     color="primary"
                     startContent={
-                      <Icon className="pointer-events-none text-2xl" icon="solar:letter-bold" />
+                      <Icon
+                        className="pointer-events-none text-2xl"
+                        icon="solar:letter-bold"
+                      />
                     }
                     type="button"
                     onPress={() => setIsFormVisible(true)}
@@ -154,16 +174,15 @@ export default function LoginForm() {
                     <div className="flex flex-col gap-2">
                       <Button
                         fullWidth
-                        
-                        startContent={<Icon icon="logos:google-icon" width={24} />}
+                        startContent={
+                          <Icon icon="logos:google-icon" width={24} />
+                        }
                         variant="flat"
-                        onPress={() => signInSocial('google')}
+                        onPress={() => signInSocial("google")}
                       >
                         Ingresar con Google
                       </Button>
-                      
                     </div>
-                    
                   </m.div>
                 </>
               )}
