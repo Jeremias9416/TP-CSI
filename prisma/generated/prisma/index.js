@@ -173,7 +173,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "C:\\Users\\jere\\OneDrive\\Desktop\\apps\\TP-CSI\\prisma\\generated\\prisma",
+      "value": "C:\\Users\\fvg\\nodeJere\\TP-CSI\\prisma\\generated\\prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -187,7 +187,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "C:\\Users\\jere\\OneDrive\\Desktop\\apps\\TP-CSI\\prisma\\schema.prisma",
+    "sourceFilePath": "C:\\Users\\fvg\\nodeJere\\TP-CSI\\prisma\\schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {

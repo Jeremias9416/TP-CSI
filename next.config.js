@@ -22,6 +22,11 @@ const nextConfig = {
       },
     ],
   },
+  experimental: { // <-- LA CONFIGURACIÓN VA AQUÍ ADENTRO
+    serverActions: {
+      bodySizeLimit: '10mb',
+    },
+  },
 };
 
 module.exports = nextConfig;

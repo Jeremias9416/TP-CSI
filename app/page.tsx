@@ -1,37 +1,19 @@
-import { auth } from "@/auth";
-import { getAllBlog } from "@/components/blog/actions/blog-action";
-import { Card, CardBody, CardHeader } from "@heroui/card";
-import Image from "next/image";
+// app/page.tsx
+import Link from 'next/link';
 
-export default async function Home() {
-  const blogs = await getAllBlog();
-  const session = await auth();
+export default function HomePage() {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <div className="inline-block text-center justify-center">
-        <h1>Nuestros blogs</h1>
-        <div>
-          <p>Nombre:</p>
-          {session?.user?.name}
-        </div>
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 ">
-          {blogs.map((blog) => (
-            <Card key={blog.id} className="w-full">
-              <CardHeader>
-                <div className="h-[200px] w-full relative top-0 left-0">
-                  <Image src={blog.image} alt={blog.image} fill className="" />
-                </div>
-              </CardHeader>
-              <CardBody>
-                <div>
-                  <h2 className="text-2xl mb-4">{blog.title}</h2>
-                  <p>{blog.content}</p>
-                </div>
-              </CardBody>
-            </Card>
-          ))}
-        </div>
+    <div className="container d-flex flex-column justify-content-center align-items-center min-vh-100">
+      <div className="text-center p-5 bg-light rounded-3 shadow">
+        <h1 className="display-4 fw-bold">Pastelería Deliciosa</h1>
+        <p className="lead my-4">
+          Bienvenido a nuestro rincón dulce. Administra nuestro catálogo de tortas
+          ingresando al panel de control.
+        </p>
+        <Link href="/admin" className="btn btn-primary btn-lg">
+          Ir al Panel de Admin
+        </Link>
       </div>
-    </section>
+    </div>
   );
 }

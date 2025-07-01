@@ -1,30 +1,10 @@
-import "@/styles/globals.css";
-import { Metadata, Viewport } from "next";
-import { Link } from "@heroui/link";
-import clsx from "clsx";
-import { SessionProvider } from "next-auth/react";
-import { Providers } from "./providers";
+// app/layout.tsx
+import 'bootstrap/dist/css/bootstrap.min.css';
+import AuthProvider from '@/components/AuthProvider'; // Importa tu nuevo componente
 
-import { siteConfig } from "@/config/site";
-import { fontSans } from "@/config/fonts";
-import { Navbar } from "@/components/navbar";
-
-export const metadata: Metadata = {
-  title: {
-    default: siteConfig.name,
-    template: `%s - ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  icons: {
-    icon: "/favicon.ico",
-  },
-};
-
-export const viewport: Viewport = {
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
+export const metadata = {
+  title: 'Pastelería Deliciosa',
+  description: 'Las mejores tortas de la ciudad',
 };
 
 export default function RootLayout({
@@ -33,35 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html suppressHydrationWarning lang="en">
-      <head />
-      <body
-        className={clsx(
-          "min-h-screen bg-background font-sans antialiased",
-          fontSans.variable,
-        )}
-      >
-        <SessionProvider>
-          <Providers themeProps={{ attribute: "class", defaultTheme: "dark" }}>
-            <div className="relative flex flex-col h-screen">
-              <Navbar />
-              <main className="container mx-auto max-w-7xl pt-16 px-6 flex-grow">
-                {children}
-              </main>
-              <footer className="w-full flex items-center justify-center py-3">
-                <Link
-                  isExternal
-                  className="flex items-center gap-1 text-current"
-                  href="https://heroui.com?utm_source=next-app-template"
-                  title="heroui.com homepage"
-                >
-                  <span className="text-default-600">Powered by</span>
-                  <p className="text-primary">HeroUI</p>
-                </Link>
-              </footer>
-            </div>
-          </Providers>
-        </SessionProvider>
+    <html lang="es">
+      <body>
+        <AuthProvider>{children}</AuthProvider>
       </body>
     </html>
   );

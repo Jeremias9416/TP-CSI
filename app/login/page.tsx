@@ -1,18 +1,26 @@
-import { Link } from "@heroui/link";
-import { Snippet } from "@heroui/snippet";
-import { Code } from "@heroui/code";
-import { button as buttonStyles } from "@heroui/theme";
+// app/login/page.tsx
+'use client';
+import "bootstrap-icons/font/bootstrap-icons.css";
 
-import { siteConfig } from "@/config/site";
-import { title, subtitle } from "@/components/primitives";
-import { GithubIcon } from "@/components/icons";
-import LoginForm from '../../components/auth/components/loginForm';
+import { signIn } from 'next-auth/react';
 
-
-export default function AuthPage() {
+export default function LoginPage() {
   return (
-    <section className="flex flex-col items-center justify-center gap-4 py-8 md:py-10">
-      <LoginForm />
-    </section>
+    <div className="container d-flex justify-content-center align-items-center min-vh-100">
+      <div className="card text-center shadow" style={{ width: '22rem' }}>
+        <div className="card-body p-4">
+          <h5 className="card-title mb-4">Acceso al Panel</h5>
+          <p className="card-text">
+            Por favor, inicia sesión para administrar el catálogo.
+          </p>
+          <button
+            onClick={() => signIn('google', { callbackUrl: '/admin' })}
+            className="btn btn-danger w-100"
+          >
+            <i className="bi bi-google me-2"></i> Iniciar sesión con Google
+          </button>
+        </div>
+      </div>
+    </div>
   );
 }
