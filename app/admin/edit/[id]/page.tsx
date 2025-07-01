@@ -1,11 +1,12 @@
 // app/admin/edit/[id]/page.tsx
-
-import { getCakeById, updateCake as updateCakeInDb } from '@/lib/actions'; // Renombramos la importación para evitar confusión
+import type { PageProps } from 'next'; // <-- 1. AÑADE ESTA IMPORTACIÓN
+import { getCakeById, updateCake as updateCakeInDb } from '@/lib/actions';
 import { notFound, redirect } from 'next/navigation';
 import Link from 'next/link';
 import CakeForm from '@/components/CakeForm';
 
-export default async function EditCakePage({ params }: { params: { id: string } }) {
+
+export default async function EditCakePage({ params }: PageProps<{ params: { id: string } }>) {
   const cake = await getCakeById(params.id);
 
   if (!cake) {
